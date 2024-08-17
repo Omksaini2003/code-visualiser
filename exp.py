@@ -2,14 +2,21 @@ import re
 import json
 from patterns import function_pattern, if_pattern, else_if_pattern, else_pattern, while_pattern, for_pattern
 
+
 def parse_cpp_code(code: str):
+#     # Regex pattern for matching function definitions
+#     function_pattern = re.compile(r'(?![a-z])[^\:,>,\.]([a-zA-Z_]\w*)\s*\(')
+#     if_pattern = re.compile(r'\bif\s*\(.*\)\s*{')
+#     else_if_pattern = re.compile(r'\belse\s+if\s*\(.*\)\s*{')
+#     else_pattern = re.compile(r'\belse\s*{')
+#     while_pattern = re.compile(r'\bwhile\s*\(.*\)\s*{')
+#     for_pattern = re.compile(r'\bfor\s*\(.*\)\s*{')
+
     def parse_block(code_lines, start_index=0):
         structure = []
         i = start_index
-        
         while i < len(code_lines):
             line = code_lines[i].strip()
-            
             if if_pattern.match(line):
                 block, i = parse_block(code_lines, i + 1)
                 structure.append({"if": block})
@@ -27,9 +34,7 @@ def parse_cpp_code(code: str):
                 structure.append({"for": block})
             elif line == "}":
                 return structure, i
-            
             i += 1
-            
         return structure, i
 
     def parse_functions(code_lines):
@@ -76,6 +81,8 @@ def JSONtoTXT(parsed_json, TXT_filepath):
 
 
 
+
+
 # Read the code from file and parse it
 filename = './sample.cpp'
 
@@ -85,3 +92,4 @@ with open(filename, 'r') as file:
 parsed_json = parse_cpp_code(code)
  
 JSONtoTXT(parsed_json,'./text_tree')
+

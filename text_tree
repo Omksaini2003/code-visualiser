@@ -1,0 +1,10 @@
+
+solve
+| - for
+| -  - if
+| -  -  - if
+| -  -  - else
+| - if
+
+main
+| - while
